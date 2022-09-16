@@ -1,0 +1,479 @@
+openapi: 3.0.1
+info:
+  title: Mr.FOX Member API Overview
+  version: 1.0.0
+servers:
+- url: "https://auclyx5d6d.execute-api.ap-southeast-1.amazonaws.com/{basePath}"
+  variables:
+    basePath:
+      default: "Prod"
+
+paths:
+  /testlambda:
+    get:
+      tags:
+        - Test
+      summary: Test Lambda
+      operationId: TestLambda
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /login:
+    post:
+      tags:
+        - Authen
+      summary: Authen to get token
+      operationId: AuthenLogin
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                country_id:
+                  type: string
+                  example: '88'
+                username:
+                  type: string
+                  example: '8908424'
+                password:
+                  type: string
+                  example: '12345678'
+              required:
+                - country_id
+                - username
+                - password
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /feed/follow:
+    post:
+      tags:
+        - Feed
+      summary: Get social media only following all domain
+      operationId: FeedFollowAllDomain
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                profile_id:
+                  type: string
+                  example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
+                page_size:
+                  type: integer
+                  default: 1
+                  example: 1
+                page_current:
+                  type: integer
+                  default: 20
+                  example: 20
+                filter_media_type:
+                  type: string
+                  enum: [All, Daily, Follower, Awards, Buffet, Secret, TopSpender, Insights, PersonalInfo, TopFan, Filter, Content, TagUser, DailyAndAwards, UnlockPost, NFT, NFTWallet, LiveArchive, Profile]
+                  example: 'All'
+                filter_sort_by:
+                  type: string
+                  enum: [All, TopViews, TopCoins, TopVotes]
+                  example: 'All'
+                filter_media_type_source:
+                  type: string
+                  enum: [All, Image, Album, Video, Article, Ticket]
+                  example: 'All'
+                filter_period:
+                  type: string
+                  enum: [All, Day1, Day3, Day7, Day14, Month1, Month3, Month6, Year1]
+                  example: 'All'
+                filter_country:
+                  type: string
+                  example: ''
+                filter_nationality:
+                  type: string
+                  example: ''
+                social_media_category:
+                  type: string
+                  enum: [ALL, SexyNoneBikini, SexyBikini, NoBra, FineArt, BeautifulThailand, Bikini, NonBikini, Topless, Shoot10, SexyVideo, Secret, Content, UnlockPost, LiveArchive, NFT, Profile, Daily]
+                  example: 'ALL'
+                sort_rank:
+                  type: string
+                  enum: [TOTAL_VOTES, MONTH_VOTES, TOTAL_COINS, MONTH_COINS, RATING, CALLS, REVIEWS, VIEW, AWARDS, SINCE, TODAY_VOTES, TODAY_COINS, FOLLOWER, TOTAL_HUNTS, TODAY_HUNTS, TOTAL_STICKER_PARTY, DAY_STICKER_PARTY, MONTH_HUNTS, TOTAL_SHOOT, MONTH_SHOOT, TODAY_SHOOTS, YEAR_VOTES, WEEK_VOTES, YEAR_COINS, WEEK_COINS, TOTAL_SHARES, YEAR_SHARES, MONTH_SHARES, WEEK_SHARES, TODAY_SHARES, TOTAL_TRAFFICS, YEAR_TRAFFICS, MONTH_TRAFFICS, WEEK_TRAFFICS, TODAY_TRAFFICS, TOTAL_VIEWS, YEAR_VIEWS, MONTH_VIEWS, WEEK_VIEWS, TODAY_VIEWS, PERIOD_VOTES, PERIOD_POPULAR_VOTES, PERIOD_COINS, PERIOD_VIEWS, PERIOD_LIKES, PERIOD_FOLLOWERS]
+                  example: 'TOTAL_VOTES'
+                filter_picture:
+                  type: string
+                  enum: [ALL, Blur, Clear]
+                  example: 'ALL'
+                start_index:
+                  type: integer
+                  default: 0
+                  example: 0
+                filter_nft_status:
+                  type: string
+                  enum: [All, ForSale, Keep]
+                  example: 'All'
+              required:
+                - page_size
+                - page_current
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /follow:
+    post:
+      tags:
+        - Follow
+      summary: Follow person
+      operationId: Follow
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                profile_id:
+                  type: string
+                  example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
+                is_follow:
+                  type: boolean
+                  example: true
+              required:
+                - profile_id
+                - is_follow
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /follow/list:
+    get:
+      tags:
+        - Follow
+      summary: Follow list
+      operationId: FollowList
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page_current
+          schema:
+            type: integer
+            default: 1
+          required: true
+          description: Page current
+          example: 1
+        - in: query
+          name: page_size
+          schema:
+            type: integer
+            default: 20
+          required: true
+          description: Page size
+          example: 20
+        - in: query
+          name: target_profile_id
+          schema:
+            type: string
+          required: true
+          description: Target profile id
+          example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum:
+              - Aliasname
+              - Lastest
+              - Earlist
+          required: true
+          description: Sort type
+          example: 'Aliasname'
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum:
+              - Follower
+              - Following
+          required: true
+          description: Follow list type
+          example: 'Follower'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /profile/get_user_info:
+    get:
+      tags:
+        - Profile
+      summary: Profile info
+      operationId: GetUserInfo
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: profile_id
+          schema:
+            type: string
+          required: true
+          description: Target profile id
+          example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /profile/get_call_info:
+    get:
+      tags:
+        - Profile
+      deprecated: true
+      summary: Profile call info (on progress)
+      operationId: GetCallInfoProfile
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: profile_id
+          schema:
+            type: string
+          required: true
+          description: Target profile id
+          example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /profile/update_user_info:
+    post:
+      tags:
+        - Profile
+      summary: Edit profile info
+      operationId: UpdateUserInfo
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                profile_id:
+                  type: string
+                  example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
+                thai_firstname:
+                  type: string
+                  example: 'หทัยชนก'
+                thai_lastname:
+                  type: string
+                  example: 'ไกรมงคล'
+                thai_nickname:
+                  type: string
+                  example: 'นุ่นนุ่น'
+                english_firstname:
+                  type: string
+                  example: 'Hataichanok'
+                english_lastname:
+                  type: string
+                  example: 'Kraimongkol'
+                english_nickname:
+                  type: string
+                  example: 'Hataichanok'
+                english_aliasname:
+                  type: string
+                  example: 'Noonnnn'
+                date_of_birth:
+                  type: string
+                  example: '1994-09-26T00:00:00'
+                nationality_id:
+                  type: integer
+                  example: 177
+                sex_id:
+                  type: integer
+                  example: 2
+                description:
+                  type: string
+                  example: 'description'
+                partner_external_id:
+                  type: string
+                  example: '7a3c5c8f-d985-4fd6-8313-78df5566c52b'
+                profile_original_url:
+                  type: string
+                  example: 'https://upload-profile-stg.s3.ap-northeast-2.amazonaws.com/e2426c27-7c98-4c06-b641-5bbd380cae5d/2385ea51-992c-42f4-b282-df9f0ecdec4f.jpeg'
+              required:
+                - profile_id
+                - thai_firstname
+                - thai_lastname
+                - thai_nickname
+                - english_firstname
+                - english_lastname
+                - english_nickname
+                - english_aliasname
+                - date_of_birth
+                - nationality_id
+                - sex_id
+                - description
+                - partner_external_id
+                - profile_original_url
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /profile/get_social_media:
+    post:
+      tags:
+        - Profile
+      summary: Get social media profile
+      operationId: Follow
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                profile_id:
+                  type: string
+                  example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
+                page_size:
+                  type: integer
+                  default: 1
+                  example: 1
+                page_current:
+                  type: integer
+                  default: 20
+                  example: 20
+              required:
+                - profile_id
+                - page_size
+                - page_current
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /upload/presign:
+    post:
+      tags:
+        - Upload
+      summary: Presign aws s3
+      operationId: UploadPresignUrl
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 'test.jpg'
+                type:
+                  type: string
+                  example: 'image'
+              required:
+                - name
+                - type
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /upload/profile_image:
+    post:
+      tags:
+        - Upload
+      summary: Edit profile image
+      operationId: UploadProfileImage
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                profile_original_files:
+                  type: string
+                  example: 'images/test.jpg'
+              required:
+                - profile_original_files
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: jwt
+      description: 'jwt token from login'
+  responses:
+    OK:
+      description: OK
+    BadRequest:
+      description: Bad request. Something went wrong.
+    Unauthorized:
+      description: Authorization information is missing or invalid.
+    InternalServerError:
+      description: Unexpected error.
