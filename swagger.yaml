@@ -419,6 +419,7 @@ paths:
                   example: 'test.jpg'
                 type:
                   type: string
+                  enum: [image, video]
                   example: 'image'
               required:
                 - name
