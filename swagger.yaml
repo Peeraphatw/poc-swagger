@@ -367,7 +367,7 @@ paths:
       tags:
         - Profile
       summary: Get social media profile
-      operationId: Follow
+      operationId: GetSocialMedia
       security:
         - bearerAuth: []
       requestBody:
