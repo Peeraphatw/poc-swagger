@@ -461,6 +461,39 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
+  /upload/upload_post:
+    post:
+      tags:
+        - Upload
+      summary: Upload a new post in profile gallery
+      operationId: UploadProfilePost
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                func:
+                  type: string
+                  enum: [picture, video]
+                  example: 'picture'
+                files:
+                  type: string
+                  example: 'images/test.jpg'
+              required:
+                - func
+                - files
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
 
 components:
   securitySchemes:
