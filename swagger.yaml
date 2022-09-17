@@ -508,10 +508,9 @@ paths:
           schema:
             type: string
             enum: [advanceSearchSorting, alertNotificationActivity, applicationRole, bank, country, countryFromRecipient, currencyExchangeRate, currencyExchangeRateSymbol, filterMediaType, filterMediaTypeSource, filterPeriod, filterPicture, filterSortBy, gender, mediaType, menuType, nationality, notificationActivity, notificationFilterType, notificationType, prefix, promotionType, province, religion, sex, socialMediaCategory, sortRank, sourceVote, topup]
-            default: 'nationality'
           required: true
           description: Master Data
-          example: 1
+          example: 'nationality'
       responses:
         '200':
           $ref: '#/components/responses/OK'
