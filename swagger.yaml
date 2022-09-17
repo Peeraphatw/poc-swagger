@@ -494,6 +494,33 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
+  /master_data:
+    get:
+      tags:
+        - MasterData
+      summary: Master Data
+      operationId: MasterData
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+            enum: [advanceSearchSorting, alertNotificationActivity, applicationRole, bank, country, countryFromRecipient, currencyExchangeRate, currencyExchangeRateSymbol, filterMediaType, filterMediaTypeSource, filterPeriod, filterPicture, filterSortBy, gender, mediaType, menuType, nationality, notificationActivity, notificationFilterType, notificationType, prefix, promotionType, province, religion, sex, socialMediaCategory, sortRank, sourceVote, topup]
+            default: 'nationality'
+          required: true
+          description: Master Data
+          example: 1
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
 
 components:
   securitySchemes:
