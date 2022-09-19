@@ -286,7 +286,7 @@ paths:
       tags:
         - Profile
       # deprecated: true
-      summary: Profile call info (on progress)
+      summary: Profile call info
       operationId: GetCallInfoProfile
       security:
         - bearerAuth: []
@@ -298,6 +298,13 @@ paths:
           required: true
           description: Target profile id
           example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
+        - in: query
+          name: domain_id
+          schema:
+            type: integer
+          required: true
+          description: Domain id
+          example: 1
       responses:
         '200':
           $ref: '#/components/responses/OK'
