@@ -137,6 +137,42 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
+  /feed/like_post:
+    post:
+      tags:
+        - Feed
+      summary: Like post
+      operationId: FeedLikePost
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                profile_id:
+                  type: string
+                  example: '91f9ca7c-19c4-4be1-92b7-be148efd0c1a'
+                media_id:
+                  type: string
+                  example: '9eaad04f-f83f-4ac7-8886-e8cc4a1bd6b4'
+                is_like:
+                  type: boolean
+                  example: true
+              required:
+                - profile_id
+                - media_id
+                - is_like
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
   /feed/delete_media:
     delete:
       tags:
