@@ -137,6 +137,34 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
+  /feed/delete_media:
+    post:
+      tags:
+        - Feed
+      summary: Delete post
+      operationId: DeleteMedia
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                media_id:
+                  type: string
+                  example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
+              required:
+                - media_id
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
   /follow:
     post:
       tags:
@@ -262,6 +290,31 @@ paths:
         - Profile
       summary: Profile info
       operationId: GetUserInfo
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: profile_id
+          schema:
+            type: string
+          required: true
+          description: Target profile id
+          example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /profile/get_user_insight:
+    get:
+      tags:
+        - Profile
+      summary: Profile info (only userInfo, insights and nft count)
+      operationId: GetUserInsight
       security:
         - bearerAuth: []
       parameters:
