@@ -138,7 +138,7 @@ paths:
         '5XX':
           $ref: '#/components/responses/InternalServerError'
   /feed/delete_media:
-    post:
+    delete:
       tags:
         - Feed
       summary: Delete post
