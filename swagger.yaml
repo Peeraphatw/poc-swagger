@@ -9,6 +9,7 @@ servers:
       default: "Prod"
 
 paths:
+# test
   /testlambda:
     get:
       tags:
@@ -24,6 +25,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
+
+# authen
   /login:
     post:
       tags:
@@ -58,6 +61,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
+
+# feed
   /feed/follow:
     post:
       tags:
@@ -201,6 +206,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
+
+# follow
   /follow:
     post:
       tags:
@@ -295,6 +302,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
+
+# profile
   /profile/domain_apply_creator:
     get:
       tags:
@@ -521,6 +530,71 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
+
+# profile/introduce_clip
+  /profile/introduce_clip/presign:
+    get:
+      tags:
+        - Profile
+      summary: Presign aws s3
+      operationId: IntroduceClipPresign
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /profile/introduce_clip:
+    get:
+      tags:
+        - Profile
+      summary: Get introduce clip
+      operationId: IntroduceClipGet
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+        - Profile
+      summary: Get introduce clip
+      operationId: IntroduceClipPost
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                gu_id:
+                  type: string
+                  example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
+              required:
+                - gu_id
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+
+# upload
   /upload/presign:
     post:
       tags:
@@ -615,6 +689,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
+
+# master_data
   /master_data:
     get:
       tags:
@@ -633,6 +709,122 @@ paths:
           required: true
           description: Master Data
           example: 1
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+
+# nft
+  /nft/collection:
+    get:
+      tags:
+        - NFT
+      summary: NFT collection list
+      operationId: NFTCollection
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page_current
+          schema:
+            type: integer
+            default: 1
+          required: true
+          description: Page current
+          example: 1
+        - in: query
+          name: page_size
+          schema:
+            type: integer
+            default: 20
+          required: true
+          description: Page size
+          example: 20
+        - in: query
+          name: profile_id
+          schema:
+            type: string
+          required: true
+          description: Target profile id
+          example: '07650c2a-3848-4bea-883c-a839e14d6d70'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /nft/recent:
+    get:
+      tags:
+        - NFT
+      summary: NFT recent list
+      operationId: NFTRecent
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page_current
+          schema:
+            type: integer
+            default: 1
+          required: true
+          description: Page current
+          example: 1
+        - in: query
+          name: page_size
+          schema:
+            type: integer
+            default: 20
+          required: true
+          description: Page size
+          example: 20
+        - in: query
+          name: profile_id
+          schema:
+            type: string
+          required: true
+          description: Target profile id
+          example: '07650c2a-3848-4bea-883c-a839e14d6d70'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /nft/detail:
+    get:
+      tags:
+        - NFT
+      summary: NFT product detail
+      operationId: NFTDetail
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: NFT product id
+          example: 11449
+        - in: query
+          name: profile_id
+          schema:
+            type: string
+          required: true
+          description: NFT profile id
+          example: '07650c2a-3848-4bea-883c-a839e14d6d70'
       responses:
         '200':
           $ref: '#/components/responses/OK'
