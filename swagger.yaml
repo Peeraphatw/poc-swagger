@@ -509,11 +509,11 @@ paths:
                 profile_id:
                   type: string
                   example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
-                page_size:
+                page_current:
                   type: integer
                   default: 1
                   example: 1
-                page_current:
+                page_size:
                   type: integer
                   default: 20
                   example: 20
