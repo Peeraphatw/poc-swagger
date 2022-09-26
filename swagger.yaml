@@ -789,9 +789,9 @@ paths:
         - in: query
           name: collection_id
           schema:
-            type: string
+            type: integer
           required: true
-          description: Collection id or typing "Recent", "Ticket"
+          description: Collection id or typing -1 (Recent) and -2 (Ticket)
           example: 1
         - in: query
           name: profile_id
