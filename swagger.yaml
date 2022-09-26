@@ -334,7 +334,7 @@ paths:
       tags:
         - Profile
       summary: Profile info
-      operationId: GetUserInfo
+      operationId: GetProfileInfo
       security:
         - bearerAuth: []
       parameters:
@@ -761,12 +761,12 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
-  /nft/recent:
+  /nft/collection_id:
     get:
       tags:
         - NFT
-      summary: NFT recent list
-      operationId: NFTRecent
+      summary: NFT collection id list
+      operationId: NFTCollectionId
       security:
         - bearerAuth: []
       parameters:
@@ -786,6 +786,13 @@ paths:
           required: true
           description: Page size
           example: 20
+        - in: query
+          name: collection_id
+          schema:
+            type: string
+          required: true
+          description: Collection id or typing "Recent", "Ticket"
+          example: 1
         - in: query
           name: profile_id
           schema:
@@ -824,6 +831,47 @@ paths:
             type: string
           required: true
           description: NFT profile id
+          example: '07650c2a-3848-4bea-883c-a839e14d6d70'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /nft/ticket:
+    get:
+      tags:
+        - NFT
+      summary: NFT Ticket list
+      operationId: NFTTicket
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page_current
+          schema:
+            type: integer
+            default: 1
+          required: true
+          description: Page current
+          example: 1
+        - in: query
+          name: page_size
+          schema:
+            type: integer
+            default: 20
+          required: true
+          description: Page size
+          example: 20
+        - in: query
+          name: profile_id
+          schema:
+            type: string
+          required: true
+          description: Target profile id
           example: '07650c2a-3848-4bea-883c-a839e14d6d70'
       responses:
         '200':
