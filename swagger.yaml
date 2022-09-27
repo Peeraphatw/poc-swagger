@@ -314,7 +314,7 @@ paths:
     get:
       tags:
         - Profile
-      summary: Profile info
+      summary: All domain info for profile
       operationId: GetDomainApplyCreator
       security:
         - bearerAuth: []
@@ -326,6 +326,40 @@ paths:
           required: true
           description: Target profile id
           example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
+  /profile/domain_for_creator:
+    get:
+      tags:
+        - Profile
+      summary: Domain info for profile
+      operationId: GetDomainForCreator
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: profile_id
+          schema:
+            type: string
+          required: true
+          description: Target profile id
+          example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
+        - in: query
+          name: promotion_type
+          schema:
+            type: string
+            enum: [VideoCall, Voice, ChatRoom, Chat, QA, Vote, Sticker, Share, Translate, Feed, Live, Undefined, Gift, Buffet, Secret, FrameAndLicense, HireRate, FreeShooting, EBook, FreeVote, PremiumVote, VipVote, StockPhoto, FreeBuffet, BuyFrame, Party, Dinner, SecretLive, PhotoTrip, BasicVote, UnlockPost, LiveArchive, LiveCommerce, Follow, NFT, NFTTicket]
+            default: 'Chat'
+          required: true
+          description: Promotion type
+          example: 'Chat'
       responses:
         '200':
           $ref: '#/components/responses/OK'
