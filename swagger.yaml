@@ -3,10 +3,15 @@ info:
   title: Mr.FOX Member API Overview
   version: 1.0.0
 servers:
-- url: "https://auclyx5d6d.execute-api.ap-southeast-1.amazonaws.com/{basePath}"
-  variables:
-    basePath:
-      default: "Prod"
+- url: https://auclyx5d6d.execute-api.ap-southeast-1.amazonaws.com/Prod
+- url: https://core-api.mrfox.app/v1
+# - url: "https://{basePath}"
+#   variables:
+#     basePath:
+#       default: "auclyx5d6d.execute-api.ap-southeast-1.amazonaws.com/Prod"
+#       enum:
+#           - "auclyx5d6d.execute-api.ap-southeast-1.amazonaws.com/Prod"
+#           - "core-api.mrfox.app/v1"
 
 paths:
 # test
