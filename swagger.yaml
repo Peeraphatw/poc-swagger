@@ -643,6 +643,14 @@ paths:
       operationId: IntroduceClipGet
       security:
         - bearerAuth: []
+      parameters:
+        - in: query
+          name: profile_id
+          schema:
+            type: string
+          required: true
+          description: Target profile id
+          example: 'e2426c27-7c98-4c06-b641-5bbd380cae5d'
       responses:
         '200':
           $ref: '#/components/responses/OK'
