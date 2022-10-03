@@ -894,6 +894,12 @@ paths:
           required: true
           description: Target profile id
           example: '07650c2a-3848-4bea-883c-a839e14d6d70'
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: false
+          description: Local search
       responses:
         '200':
           $ref: '#/components/responses/OK'
